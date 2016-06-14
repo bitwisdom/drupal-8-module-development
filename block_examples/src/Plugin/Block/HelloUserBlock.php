@@ -21,6 +21,9 @@ class HelloUserBlock extends BlockBase {
       return \Drupal\Core\Access\AccessResult::forbidden();
     }
     
+    $route_name = \Drupal::routeMatch()->getRouteName();
+    kint($route_name);
+    
     return parent::blockAccess($account);
   }
 
