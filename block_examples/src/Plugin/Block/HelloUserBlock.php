@@ -26,8 +26,10 @@ class HelloUserBlock extends BlockBase {
       return \Drupal\Core\Access\AccessResult::forbidden();
     }
     
-    $route_parameters = \Drupal::routeMatch()->getParameters();
-    ksm($route_name, $route_parameters);
+    $route_account = \Drupal::routeMatch()->getParameter('user');
+    if (empty($route_account) || $route_account->id() != $account->id()) {
+      return \Drupal\Core\Access\AccessResult::forbidden();
+    }
     
     return parent::blockAccess($account);
   }
