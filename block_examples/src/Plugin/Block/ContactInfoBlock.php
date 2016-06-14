@@ -53,8 +53,8 @@ class ContactInfoBlock extends BlockBase {
   public function build() {
     return [
       '#markup' => 
-        '<div>' . $this->t('Phone Number: @phone', ['@phone' => '555-666-7777']) . '</div>' .
-        '<div>' . $this->t('Email: @email', ['@email' => 'someone@example.com']) . '</div>',
+        '<div>' . $this->t('Phone Number: @phone', ['@phone' => $this->configuration['phone']]) . '</div>' .
+        '<div>' . $this->t('Email: @email', ['@email' => $this->configuration['email']]) . '</div>',
     ];
   }
 
