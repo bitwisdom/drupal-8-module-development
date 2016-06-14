@@ -19,10 +19,13 @@ class HelloUserBlock extends BlockBase {
    * {@inheritdoc}
    */
   public function build() {
-    $user = \Drupal::currentUser();
+    $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
     return [
-      '#markup' => $this->t('Hello @name!!!', 
-          ['@name' => $user->getDisplayName()]
+      '#markup' => $this->t('Hello @name!!! You logged in at @login.', 
+          [
+            '@name' => $user->getDisplayName(),
+            '@login' => $user->getLastLoginTime(),
+          ]
           ),
     ];
   }
