@@ -20,11 +20,12 @@ class HelloUserBlock extends BlockBase {
    */
   public function build() {
     $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+    $date_formatter = \Drupal::service('date.formatter');
     return [
       '#markup' => $this->t('Hello @name!!! You logged in at @login.', 
           [
             '@name' => $user->getDisplayName(),
-            '@login' => $user->getLastLoginTime(),
+            '@login' => $date_formatter->format($user->getLastLoginTime(), 'short'),
           ]
           ),
     ];
