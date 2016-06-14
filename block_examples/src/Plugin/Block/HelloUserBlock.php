@@ -14,8 +14,17 @@ use Drupal\Core\Block\BlockBase;
  * )
  */
 class HelloUserBlock extends BlockBase {
+  
+  
+  protected function blockAccess(\Drupal\Core\Session\AccountInterface $account) {
+    if ($account->isAnonymous()) {
+      return \Drupal\Core\Access\AccessResult::forbidden();
+    }
+    
+    return parent::blockAccess($account);
+  }
 
-  /**
+    /**
    * {@inheritdoc}
    */
   public function build() {
