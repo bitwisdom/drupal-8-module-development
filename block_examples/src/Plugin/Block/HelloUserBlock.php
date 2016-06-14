@@ -22,7 +22,11 @@ class HelloUserBlock extends BlockBase {
     }
     
     $route_name = \Drupal::routeMatch()->getRouteName();
-    kint($route_name);
+    if ($route_name != 'entity.user.canonical') {
+      return \Drupal\Core\Access\AccessResult::forbidden();
+    }
+    
+    //kint($route_name);
     
     return parent::blockAccess($account);
   }
