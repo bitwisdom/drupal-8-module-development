@@ -21,7 +21,9 @@ class HelloUserBlock extends BlockBase {
   public function build() {
     $user = \Drupal::currentUser();
     return [
-      '#markup' => $this->t('Hello ' . $user->getDisplayName() . '!!!'),
+      '#markup' => $this->t('Hello @name!!!', 
+          ['@name' => $user->getDisplayName()]
+          ),
     ];
   }
 
