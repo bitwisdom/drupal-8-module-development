@@ -1,0 +1,6 @@
+name: Route Examples
+type: module
+description: 'Route Examples Drupal 8.'
+package: Training
+version: '8.x-1.0'
+core: '8.x'
