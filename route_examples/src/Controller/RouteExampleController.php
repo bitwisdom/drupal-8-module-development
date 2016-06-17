@@ -47,5 +47,33 @@ class RouteExampleController extends ControllerBase {
   public function userInfoTitle(UserInterface $user) {
     return $this->t('Information About @user', ['@user' => $user->getDisplayName()]);
   }
+  
+  public function nodeList($type) {
+    $nids = \Drupal::entityQuery('node')
+        ->condition('type', $type)
+        ->range(0, 10)
+        ->execute();
+    $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($nids);
+
+    $header = [
+      $this->t('ID'),
+      $this->t('Type'),
+      $this->t('Title'),
+    ];
+    $rows = [];
+    foreach ($nodes as $node) {
+      $rows[] = [
+        $node->id(),
+        $node->bundle(),
+        $node->getTitle(),
+      ];
+    }
+    
+    return [
+      '#theme' => 'table',
+      '#header' => $header,
+      '#rows' => $rows,
+    ];
+  }
 
 }

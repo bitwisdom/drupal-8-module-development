@@ -21,3 +21,11 @@ route_examples.user_info:
     _title_callback: '\Drupal\route_examples\Controller\RouteExampleController::userInfoTitle'
   requirements:
     _permission: 'administer users'
+
+route_examples.node_list:
+  path: '/node-list/{type}'
+  defaults:
+    _controller: '\Drupal\route_examples\Controller\RouteExampleController::nodeList'
+    _title: 'Node List'
+  requirements:
+    _permission: 'access content'
