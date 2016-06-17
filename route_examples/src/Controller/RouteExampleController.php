@@ -49,9 +49,11 @@ class RouteExampleController extends ControllerBase {
   }
   
   public function nodeList($limit, $type) {
-    $nids = \Drupal::entityQuery('node')
-        ->condition('type', $type)
-        ->range(0, $limit)
+    $query = \Drupal::entityQuery('node');
+    if ($type != 'all') {
+      $query->condition('type', $type);
+    }
+    $nids = $query->range(0, $limit)
         ->execute();
     $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($nids);
 

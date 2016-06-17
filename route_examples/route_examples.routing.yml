@@ -28,5 +28,6 @@ route_examples.node_list:
     _controller: '\Drupal\route_examples\Controller\RouteExampleController::nodeList'
     _title: 'Node List'
     limit: 10
+    type: all
   requirements:
     _permission: 'access content'
