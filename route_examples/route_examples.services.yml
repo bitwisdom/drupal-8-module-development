@@ -1,0 +1,6 @@
+services:
+  route_examples.route_subscriber:
+    class: 'Drupal\route_examples\Routing\ExampleRouteSubscriber'
+    tags:
+      - { name: event_subscriber }
+      
