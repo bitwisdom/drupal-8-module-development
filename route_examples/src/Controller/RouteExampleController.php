@@ -11,4 +11,17 @@ class RouteExampleController extends ControllerBase {
       '#markup' => $this->t('Hello world!'),
     ];
   }
+  
+  public function helloUser() {
+    $session = \Drupal::currentUser();
+    return [
+      '#markup' => $this->t('Hello @user', ['@user' => $session->getDisplayName()]),
+    ];
+  }
+  
+  public function helloUserTitle() {
+    $session = \Drupal::currentUser();
+    return $this->t('Hello @user', ['@user' => $session->getDisplayName()]);
+  } 
+
 }

@@ -5,3 +5,12 @@ route_examples.hello_world:
     _title: 'Hello World'
   requirements:
     _permission: 'access content'
+    
+route_examples.hello_user:
+  path: '/hello-user'
+  defaults:
+    _controller: '\Drupal\route_examples\Controller\RouteExampleController::helloUser'
+    _title_callback: '\Drupal\route_examples\Controller\RouteExampleController::helloUserTitle'
+  requirements:
+    _permission: 'access content'
+    
