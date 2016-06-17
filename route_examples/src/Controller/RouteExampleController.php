@@ -5,6 +5,8 @@ namespace Drupal\route_examples\Controller;
 use \Drupal\Core\Controller\ControllerBase;
 use \Drupal\user\UserInterface;
 use \Drupal\node\NodeInterface;
+use \Drupal\Core\Session\AccountInterface;
+use \Drupal\Core\Access\AccessResult;
 
 class RouteExampleController extends ControllerBase {
   
@@ -48,6 +50,17 @@ class RouteExampleController extends ControllerBase {
   public function userInfoTitle(UserInterface $user) {
     return $this->t('Information About @user', ['@user' => $user->getDisplayName()]);
   }
+  
+  public function userInfoAccess(AccountInterface $account, UserInterface $user) {
+    if ($account->hasPermission('view any user info')) {
+      return AccessResult::allowed();
+    }
+    if ($account->hasPermission('view own user info') && $account->id() == $user->id()) {
+      return AccessResult::allowed();
+    }
+    return AccessResult::forbidden();
+  }
+
   
   public function nodeList($limit, $type) {
     $query = \Drupal::entityQuery('node');
