@@ -4,6 +4,7 @@ namespace Drupal\route_examples\Controller;
 
 use \Drupal\Core\Controller\ControllerBase;
 use \Drupal\user\UserInterface;
+use \Drupal\node\NodeInterface;
 
 class RouteExampleController extends ControllerBase {
   

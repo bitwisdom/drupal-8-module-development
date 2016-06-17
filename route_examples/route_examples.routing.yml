@@ -39,4 +39,10 @@ route_examples.node_compare:
     _title: 'Node Compare'
   requirements:
     _permission: 'access content'
-  
+  options:
+    parameters:
+      node1:
+        type: entity:node
+      node2:
+        type: entity:node
+        
