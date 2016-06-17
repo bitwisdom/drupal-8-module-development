@@ -20,7 +20,7 @@ route_examples.user_info:
     _controller: '\Drupal\route_examples\Controller\RouteExampleController::userInfo'
     _title_callback: '\Drupal\route_examples\Controller\RouteExampleController::userInfoTitle'
   requirements:
-    _permission: 'administer users'
+    _permission: 'view any user info'
 
 route_examples.node_list:
   path: '/node-list/{type}/{limit}'
