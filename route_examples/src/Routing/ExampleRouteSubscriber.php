@@ -11,7 +11,9 @@ class ExampleRouteSubscriber extends RouteSubscriberBase {
     if ($route = $collection->get('user.logout')) {
       $route->setPath('/logout');
     }
-    
+    if ($route = $collection->get('system.admin_structure')) {
+      $route->setDefault('_title', 'Architecture');
+    }
   }
 
 }
