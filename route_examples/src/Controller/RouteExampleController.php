@@ -77,5 +77,14 @@ class RouteExampleController extends ControllerBase {
       '#rows' => $rows,
     ];
   }
+  
+  public function nodeCompare(NodeInterface $node1, NodeInterface $node2) {
+    $diff = $node1->getCreatedTime() - $node2->getCreatedTime();
+    
+    return [
+      '#markup' => t('Created Time Difference: @diff seconds', ['@diff' => $diff]),
+    ];
+  }
+
 
 }

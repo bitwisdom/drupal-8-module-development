@@ -31,3 +31,12 @@ route_examples.node_list:
     type: all
   requirements:
     _permission: 'access content'
+    
+route_examples.node_compare:
+  path: '/node-compare/{node1}/{node2}'
+  defaults:
+    _controller: '\Drupal\route_examples\Controller\RouteExampleController::nodeCompare'
+    _title: 'Node Compare'
+  requirements:
+    _permission: 'access content'
+  
