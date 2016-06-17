@@ -48,10 +48,10 @@ class RouteExampleController extends ControllerBase {
     return $this->t('Information About @user', ['@user' => $user->getDisplayName()]);
   }
   
-  public function nodeList($type) {
+  public function nodeList($limit, $type) {
     $nids = \Drupal::entityQuery('node')
         ->condition('type', $type)
-        ->range(0, 10)
+        ->range(0, $limit)
         ->execute();
     $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($nids);
 

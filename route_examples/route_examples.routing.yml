@@ -23,7 +23,7 @@ route_examples.user_info:
     _permission: 'administer users'
 
 route_examples.node_list:
-  path: '/node-list/{type}'
+  path: '/node-list/{type}/{limit}'
   defaults:
     _controller: '\Drupal\route_examples\Controller\RouteExampleController::nodeList'
     _title: 'Node List'
