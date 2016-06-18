@@ -3,3 +3,8 @@
 function route_examples_menu_links_discovered_alter(&$links) {
   $links['entity.user.collection']['title'] = t('Users');
 }
+
+
+function route_examples_menu_local_actions_alter(&$local_actions) {
+  $local_actions['node.add_page']['title'] = t('Add new node');
+}
