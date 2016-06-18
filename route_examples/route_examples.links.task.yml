@@ -2,4 +2,10 @@ route_examples.user_info:
   title: 'User Info'
   route_name: route_examples.user_info
   base_route: entity.user.canonical
+  weight: 100
 
+route_examples.hello_world:
+  title: 'World'
+  route_name: route_examples.hello_world
+  base_route: route_examples.hello_world
+  weight: -10
