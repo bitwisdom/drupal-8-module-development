@@ -2,3 +2,9 @@ route_examples.hello_world:
   title: 'Hello World'
   description: 'See a Hello World message'
   route_name: route_examples.hello_world
+  
+route_examples.hello_user:
+  title: 'Hello User'
+  description: 'See a Hello User Message'
+  route_name: route_examples.hello_user
+  menu_name: account
