@@ -1,0 +1,4 @@
+route_examples.hello_world:
+  title: 'Hello World'
+  description: 'See a Hello World message'
+  route_name: route_examples.hello_world
