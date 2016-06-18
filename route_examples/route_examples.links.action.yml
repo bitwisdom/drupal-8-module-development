@@ -1,0 +1,5 @@
+route_examples.hello_world:
+  route_name: route_examples.hello_world
+  title: 'Create new user info'
+  appears_on:
+    - route_examples.user_info
