@@ -9,3 +9,8 @@ route_examples.hello_world:
   route_name: route_examples.hello_world
   base_route: route_examples.hello_world
   weight: -10
+  
+route_examples.hello_user:
+  title: 'User'
+  route_name: route_examples.hello_user
+  base_route: route_examples.hello_world
