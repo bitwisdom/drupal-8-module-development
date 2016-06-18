@@ -13,6 +13,8 @@ route_examples.hello_user:
     _title_callback: '\Drupal\route_examples\Controller\RouteExampleController::helloUserTitle'
   requirements:
     _permission: 'access content'
+  options:
+    _admin_route: TRUE
     
 route_examples.user_info:
   path: '/user-info/{user}'
