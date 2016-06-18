@@ -8,3 +8,11 @@ route_examples.hello_user:
   description: 'See a Hello User Message'
   route_name: route_examples.hello_user
   menu_name: account
+  weight: -20
+  
+route_examples.hello_user_admin:
+  title: 'Hello User'
+  description: 'See a Hello User Message'
+  parent: system.admin_config_development
+  route_name: route_examples.hello_user
+  weight: 100 
