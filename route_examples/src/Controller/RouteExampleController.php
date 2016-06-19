@@ -10,6 +10,43 @@ use \Drupal\Core\Access\AccessResult;
 
 class RouteExampleController extends ControllerBase {
   
+  /**
+   * @var \Drupal\Core\Session\AccountProxyInterface
+   */
+  private $curUser;
+  
+  /**
+   * @var \Drupal\Core\Datetime\DateFormatterInterface
+   */
+  private $dateFormatter;
+  
+  /**
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  private $entTypeManager;
+  
+  /**
+   * @param \Drupal\Core\Session\AccountProxyInterface $curUser
+   * @param \Drupal\Core\Datetime\DateFormatterInterface $dateFormatter
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entTypeManager
+   */
+  function __construct(\Drupal\Core\Session\AccountProxyInterface $curUser, 
+      \Drupal\Core\Datetime\DateFormatterInterface $dateFormatter, 
+      \Drupal\Core\Entity\EntityTypeManagerInterface $entTypeManager) {
+    $this->curUser = $curUser;
+    $this->dateFormatter = $dateFormatter;
+    $this->entTypeManager = $entTypeManager;
+  }
+  
+  public static function create(\Symfony\Component\DependencyInjection\ContainerInterface $container) {
+    return new static(
+      $container->get('current_user'),
+      $container->get('date.formatter'),
+      $container->get('entity_type.manager')
+    );
+  }
+  
+  
   public function helloWorld() {
     return [
       '#markup' => $this->t('Hello world!'),
@@ -17,19 +54,16 @@ class RouteExampleController extends ControllerBase {
   }
   
   public function helloUser() {
-    $session = \Drupal::currentUser();
     return [
-      '#markup' => $this->t('Hello @user', ['@user' => $session->getDisplayName()]),
+      '#markup' => $this->t('Hello @user', ['@user' => $this->curUser->getDisplayName()]),
     ];
   }
   
   public function helloUserTitle() {
-    $session = \Drupal::currentUser();
-    return $this->t('Hello @user', ['@user' => $session->getDisplayName()]);
+    return $this->t('Hello @user', ['@user' => $this->curUser->getDisplayName()]);
   } 
   
   public function userInfo(UserInterface $user) {
-    $date_formater = \Drupal::service('date.formatter');
     $markup = '<div>' . 
         $this->t('Name: @name', ['@name' => $user->getDisplayName()]) . 
         '</div>';
@@ -37,10 +71,10 @@ class RouteExampleController extends ControllerBase {
         $this->t('Email: @email', ['@email' => $user->getEmail()]) . 
         '</div>';
     $markup .= '<div>' .
-        $this->t('Created: @created', ['@created' => $date_formater->format($user->getCreatedTime())]) . 
+        $this->t('Created: @created', ['@created' => $this->dateFormatter->format($user->getCreatedTime())]) . 
         '</div>';
     $markup .= '<div>' . 
-        $this->t('Last Login: @login', ['@login' => $date_formater->format($user->getLastLoginTime())]) .
+        $this->t('Last Login: @login', ['@login' => $this->dateFormatter->format($user->getLastLoginTime())]) .
         '</div>';
     return [
       '#markup' => $markup,
@@ -63,13 +97,13 @@ class RouteExampleController extends ControllerBase {
 
   
   public function nodeList($limit, $type) {
-    $query = \Drupal::entityQuery('node');
+    $query = $this->entTypeManager->getStorage('node')->getQuery();
     if ($type != 'all') {
       $query->condition('type', $type);
     }
     $nids = $query->range(0, $limit)
         ->execute();
-    $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($nids);
+    $nodes = $this->entTypeManager->getStorage('node')->loadMultiple($nids);
 
     $header = [
       $this->t('ID'),
