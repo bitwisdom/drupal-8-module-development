@@ -1,0 +1,7 @@
+service_examples.list_holidays:
+  path: '/holidays'
+  defaults:
+    _controller: 'Drupal\service_examples\Controller\ServiceExamplesController::listHolidays'
+    _title: 'Holidays'
+  requirements:
+    _permission: 'access content'
