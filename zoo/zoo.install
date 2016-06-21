@@ -83,3 +83,17 @@ function zoo_schema() {
   
   return $schema;
 }
+
+/**
+ * Implements hook_install()
+ */
+function zoo_install() {
+  drupal_set_message(t('Awesome! You have a zoo!'));
+}
+
+/**
+ * Implements hook_uninstall()
+ */
+function zoo_uninstall() {
+  drupal_set_message(t('Oh no! Please re-install me!'), 'warning');
+}
