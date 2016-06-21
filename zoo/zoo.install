@@ -1,0 +1,85 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function zoo_schema() {
+  $schema = [];
+  
+  $schema['zoo_animal'] = [
+    'description' => 'Stores information about zoo animals.',
+    'fields' => [
+      'animal_id' => [
+        'description' => 'Unique ID of the animal',
+        'type' => 'serial',
+        'not null' => TRUE,
+        'unsigned' => TRUE,
+      ],
+      'name' => [
+        'description' => 'The name of the animal.',
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'type' => [
+        'description' => 'The type of the animal.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'birthdate' => [
+        'description' => 'The birth date of the animal.',
+        'type' => 'int',
+        'length' => 11,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'weight' => [
+        'description' => 'The weight of the animal.',
+        'type' => 'float',
+        'not null' => TRUE,
+        'default' => 0.0,
+      ],
+      'description' => [
+        'description' => 'A description of the animal.',
+        'type' => 'text',
+        'not null' => FALSE,
+      ],
+      'habitat_id' => [
+        'description' => 'The habitat the animal is housed in.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+      ],
+    ],
+    'primary key' => ['animal_id'],
+    'indexes' => [
+      'habitat' => ['habitat_id'],
+      'name' => ['name'],
+      'type' => ['type'],
+    ],
+  ];
+  
+  $schema['zoo_habitat'] = [
+    'description' => 'Stores information about zoo habitats.',
+    'fields' => [
+      'habitat_id' => [
+        'description' => 'Unique ID of the habitat',
+        'type' => 'serial',
+        'not null' => TRUE,
+        'unsigned' => TRUE,
+      ],
+      'name' => [
+        'description' => 'The name of the habitat.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+    ],
+    'primary key' => ['habitat_id'],
+  ];
+  
+  return $schema;
+}
