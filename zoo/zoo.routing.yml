@@ -1,0 +1,7 @@
+zoo.animals_list:
+  path: '/animals'
+  defaults:
+    _controller: '\Drupal\zoo\Controller\AnimalsListController::listAnimals'
+    _title: 'Our Animals'
+  requirements:
+    _permission: 'access content'
