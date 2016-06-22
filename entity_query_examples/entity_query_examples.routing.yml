@@ -5,3 +5,11 @@ entity_query_examples.user_list:
     _title: 'User Query List'
   requirements:
     _permission: 'administer users'
+    
+entity_query_examples.node_list:
+  path: '/node-query-list'
+  defaults:
+    _controller: '\Drupal\entity_query_examples\Controller\EntityQueryController::nodeList'
+    _title: 'Node Query List'
+  requirements:
+    _permission: 'access content'

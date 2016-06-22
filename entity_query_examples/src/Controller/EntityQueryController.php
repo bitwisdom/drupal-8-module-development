@@ -33,4 +33,33 @@ class EntityQueryController extends ControllerBase {
       '#rows' => $rows,
     ];
   }
+  
+   public function nodeList() {
+    $query = $this->entityTypeManager()->getStorage('node')->getQuery();
+    $results = $query->execute();
+    $nodes = $this->entityTypeManager()->getStorage('node')->loadMultiple($results);
+    
+    $header = [
+      $this->t('ID'),
+      $this->t('Type'),
+      $this->t('Title'),
+      $this->t('Author'),
+    ];
+    $rows = [];
+    foreach ($nodes as $node) {
+      $rows[] = [
+        $node->id(),
+        $node->bundle(),
+        $node->getTitle(),
+        $node->getOwner()->getDisplayName(),
+      ];
+    }
+    
+    return [
+      '#theme' => 'table',
+      '#header' => $header,
+      '#rows' => $rows,
+    ];
+  }
+  
 }
