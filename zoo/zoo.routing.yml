@@ -11,5 +11,6 @@ zoo.habitats_list:
   defaults:
     _controller: '\Drupal\zoo\Controller\AnimalsListController::listAnimalsInHabitat'
     _title_callback: '\Drupal\zoo\Controller\AnimalsListController::listAnimalsInHabitatTitle'
+    habitat: all
   requirements:
     _permission: 'access content'

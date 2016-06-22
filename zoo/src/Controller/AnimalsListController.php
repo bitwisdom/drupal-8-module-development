@@ -67,11 +67,13 @@ class AnimalsListController extends ControllerBase {
     ];
     $rows = [];
     
-    $results = $this->connection->select('zoo_animal', 'a')
+    $query = $this->connection->select('zoo_animal', 'a')
         ->fields('a')
-        ->condition('a.habitat_id', $habitat)
-        ->orderBy('name', 'ASC')
-        ->execute();
+        ->orderBy('name', 'ASC');
+    if ($habitat != 'all') {
+      $query->condition('a.habitat_id', $habitat);
+    }
+    $results = $query->execute();
     foreach ($results as $record) {
       $age = floor((REQUEST_TIME - $record->birthdate) / (365 * 24 * 3600));
       $rows[] = [
@@ -90,6 +92,9 @@ class AnimalsListController extends ControllerBase {
   }
   
   public function listAnimalsInHabitatTitle($habitat) {
+    if ($habitat == 'all') {
+      return $this->t('Animals in All Habitats');
+    }
     $name = $this->connection->select('zoo_habitat', 'h')
         ->fields('h', ['name'])
         ->condition('h.habitat_id', $habitat, '=')
