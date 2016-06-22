@@ -1,0 +1,7 @@
+entity_query_examples.user_list:
+  path: '/user-query-list'
+  defaults:
+    _controller: '\Drupal\entity_query_examples\Controller\EntityQueryController::userList'
+    _title: 'User Query List'
+  requirements:
+    _permission: 'administer users'
