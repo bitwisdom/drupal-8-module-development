@@ -164,5 +164,86 @@ class AnimalsListController extends ControllerBase {
     return $this->t('Habitat Not Found');
   }
   
+  public function demoInsert() {
+    // Single INSERT
+    $fields = [
+      'name' => 'Mike',
+      'type' => 'Monkey',
+      'birthdate' => strtotime('2015-06-17'),
+      'weight' => 5.3,
+      'description' => 'Mike is great.',
+      'habitat_id' => 4,
+    ];
+    $this->connection->insert('zoo_animal')
+        ->fields($fields)
+        ->execute();
+    
+    // Multiple INSERT with single query.
+    $fields = [
+      'name',
+      'type',
+      'birthdate',
+      'weight',
+      'description',
+      'habitat_id',
+    ];
+    $query = $this->connection->insert('zoo_animal')
+        ->fields($fields);
+    
+    $value1 = [
+      'name' => 'Polly',
+      'type' => 'Parrotfish',
+      'birthdate' => strtotime('2013-09-10'),
+      'weight' => 8.1,
+      'description' => 'Polly is colorful.',
+      'habitat_id' => 2,
+    ];
+    $query->values($value1);
+    
+    $value2 = [
+      'name' => 'Maggie',
+      'type' => 'Macaw',
+      'birthdate' => strtotime('2014-02-02'),
+      'weight' => 2.5,
+      'description' => 'Maggie is grumpy.',
+      'habitat_id' => 3,
+    ];
+    $query->values($value2);
+   
+    $query->execute();
+    
+    return [
+      '#markup' => $this->t('Inserts completed.'),
+    ];
+  }
+  
+  public function demoUpdate() {
+    $fields_to_change = [
+      'type' => 'Howler Monkey',
+      'weight' => 6.7,
+    ];
+    $this->connection->update('zoo_animal')
+        ->fields($fields_to_change)
+        ->condition('name', 'Mike')
+        ->execute();
+    
+    return [
+      '#markup' => $this->t('Updates completed.'),
+    ];
+  }
+  
+  public function demoDelete() {
+    $this->connection->delete('zoo_animal')
+        ->condition('name', 'Mike')
+        ->execute();
+    $this->connection->delete('zoo_animal')
+        ->condition('name', ['Polly', 'Maggie'], 'IN')
+        ->execute();
+    
+    return [
+      '#markup' => $this->t('Deletes completed.'),
+    ];
+  }
+  
 }
 

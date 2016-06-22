@@ -14,3 +14,27 @@ zoo.habitats_list:
     habitat: all
   requirements:
     _permission: 'access content'
+    
+zoo.demo_insert:
+  path: '/demo-insert'
+  defaults:
+    _controller: '\Drupal\zoo\Controller\AnimalsListController::demoInsert'
+    _title: 'Demo: Insert Queries'
+  requirements:
+    _permission: 'access content'
+    
+zoo.demo_update:
+  path: '/demo-update'
+  defaults:
+    _controller: '\Drupal\zoo\Controller\AnimalsListController::demoUpdate'
+    _title: 'Demo: Update Queries'
+  requirements:
+    _permission: 'access content'
+    
+zoo.demo_delete:
+  path: '/demo-delete'
+  defaults:
+    _controller: '\Drupal\zoo\Controller\AnimalsListController::demoDelete'
+    _title: 'Demo: Delete Queries'
+  requirements:
+    _permission: 'access content'
