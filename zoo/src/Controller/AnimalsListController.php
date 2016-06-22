@@ -73,15 +73,24 @@ class AnimalsListController extends ControllerBase {
     if ($habitat != 'all') {
       $query->condition('a.habitat_id', $habitat);
     }
+    else {
+      $query->leftJoin('zoo_habitat', 'h', 'a.habitat_id = h.habitat_id');
+      $query->addField('h', 'name', 'habitat_name');
+      $header[] = $this->t('Habitat');
+    }
     $results = $query->execute();
     foreach ($results as $record) {
       $age = floor((REQUEST_TIME - $record->birthdate) / (365 * 24 * 3600));
-      $rows[] = [
+      $row = [
         $record->name,
         $record->type,
         $this->t('@age years', ['@age' => $age]),
         $this->t('@weight kg', ['@weight' => $record->weight]),
       ];
+      if ($habitat == 'all') {
+        $row[] = $record->habitat_name;
+      }
+      $rows[] = $row;
     }
     
     return [
