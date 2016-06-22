@@ -36,6 +36,9 @@ class EntityQueryController extends ControllerBase {
   
    public function nodeList() {
     $query = $this->entityTypeManager()->getStorage('node')->getQuery();
+    $query->notExists('field_state')
+        ->condition('type', 'article')
+        ->sort('title');
     $results = $query->execute();
     $nodes = $this->entityTypeManager()->getStorage('node')->loadMultiple($results);
     
