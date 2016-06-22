@@ -69,7 +69,8 @@ class AnimalsListController extends ControllerBase {
     
     $query = $this->connection->select('zoo_animal', 'a')
         ->fields('a')
-        ->orderBy('name', 'ASC');
+        ->orderBy('name', 'ASC')
+        ->range(0, 100);
     if ($habitat != 'all') {
       $query->condition('a.habitat_id', $habitat);
     }
@@ -88,7 +89,11 @@ class AnimalsListController extends ControllerBase {
         $this->t('@weight kg', ['@weight' => $record->weight]),
       ];
       if ($habitat == 'all') {
-        $row[] = $record->habitat_name;
+        $row[] = \Drupal\Core\Link::fromTextAndUrl(
+            $record->habitat_name, 
+            \Drupal\Core\Url::fromRoute('zoo.habitats_list', ['habitat' => $record->habitat_id])
+        );
+
       }
       $rows[] = $row;
     }
