@@ -67,11 +67,11 @@ class AnimalsListController extends ControllerBase {
     ];
     $rows = [];
     
-    $results = $this->connection->query("SELECT * FROM {zoo_animal} 
-        WHERE habitat_id = :habitat_id ORDER BY name",
-        [
-          'habitat_id' => $habitat,
-        ]);
+    $results = $this->connection->select('zoo_animal', 'a')
+        ->fields('a')
+        ->condition('a.habitat_id', $habitat)
+        ->orderBy('name', 'ASC')
+        ->execute();
     foreach ($results as $record) {
       $age = floor((REQUEST_TIME - $record->birthdate) / (365 * 24 * 3600));
       $rows[] = [
@@ -90,11 +90,11 @@ class AnimalsListController extends ControllerBase {
   }
   
   public function listAnimalsInHabitatTitle($habitat) {
-    $query = $this->connection->select('zoo_habitat', 'h');
-    $query->fields('h', ['name']);
-    $query->condition('h.habitat_id', $habitat, '=');
-    $result = $query->execute();
-    $name = $result->fetchField();
+    $name = $this->connection->select('zoo_habitat', 'h')
+        ->fields('h', ['name'])
+        ->condition('h.habitat_id', $habitat, '=')
+        ->execute()
+        ->fetchField();
     if (!empty($name)) {
       return $this->t('Animals in @habitat', ['@habitat' => $name]);
     }
