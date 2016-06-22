@@ -1,0 +1,6 @@
+name: External Database Examples
+type: module
+description: 'External database examples for Drupal 8.'
+package: Training
+version: '8.x-1.0'
+core: '8.x'

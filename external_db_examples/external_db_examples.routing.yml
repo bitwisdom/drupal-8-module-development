@@ -1,0 +1,7 @@
+external_db_examples.personnel_list:
+  path: '/personnel'
+  defaults:
+    _controller: '\Drupal\external_db_examples\Controller\ExternalDbController::personnelList'
+    _title: 'Personnel'
+  requirements:
+    _permission: 'access content'
