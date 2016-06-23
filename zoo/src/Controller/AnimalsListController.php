@@ -70,7 +70,8 @@ class AnimalsListController extends ControllerBase {
     $query = $this->connection->select('zoo_animal', 'a')
         ->fields('a')
         ->orderBy('name', 'ASC')
-        ->range(0, 100);
+        ->extend('Drupal\Core\Database\Query\PagerSelectExtender')
+        ->limit(3);
     if ($habitat != 'all') {
       $query->condition('a.habitat_id', $habitat);
     }
@@ -99,9 +100,14 @@ class AnimalsListController extends ControllerBase {
     }
     
     return [
-      '#theme' => 'table',
-      '#rows' => $rows,
-      '#header' => $header,
+      'data' => [
+        '#theme' => 'table',
+        '#rows' => $rows,
+        '#header' => $header,
+      ],
+      'pager' => [
+        '#type' => 'pager',
+      ],
     ];
   }
   

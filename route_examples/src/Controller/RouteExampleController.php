@@ -76,6 +76,7 @@ class RouteExampleController extends ControllerBase {
     $markup .= '<div>' . 
         $this->t('Last Login: @login', ['@login' => $this->dateFormatter->format($user->getLastLoginTime())]) .
         '</div>';
+    
     return [
       '#markup' => $markup,
     ];
@@ -123,6 +124,7 @@ class RouteExampleController extends ControllerBase {
       '#theme' => 'table',
       '#header' => $header,
       '#rows' => $rows,
+      '#caption' => $this->t('These are some nodes.'),
     ];
   }
   
