@@ -35,9 +35,10 @@ class AnimalViewController extends ControllerBase {
    * @param int $animal_id
    */
   public function animalView($animal_id) {
-    
+    $animal = $this->animalLoad($animal_id);
     return [
-      '#markup' => 'Replace this with template.',
+      '#theme' => 'zoo_animal',
+      '#animal' => $animal,
     ];
   }
   
