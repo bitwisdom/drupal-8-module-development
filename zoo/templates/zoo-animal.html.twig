@@ -1,10 +1,11 @@
 <div class="animal">
 <div class="type"><label>Type:</label> {{ animal.type }}</div>
-<div class="birthdate"><label>Birth Date:</label> {{ animal.birthdate }}</div>
+<div class="birthdate"><label>Birth Date:</label> {{ animal.birthdate | date('F j, Y') }}</div>
 <div class="weight"><label>Weight:</label> 
     <span class="weight-amount">{{ animal.weight }}</span> 
     <span class="weight-unit">kg</span>
     <span class="weight-convert"></span>
   </div>
 <div class="description">{{ animal.description }}</div>
+<div class="habitat"><label>Habitat:</label> {{ animal.habitat_id }}</div>
 </div>
