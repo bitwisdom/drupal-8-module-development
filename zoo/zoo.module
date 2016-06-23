@@ -10,3 +10,12 @@ function zoo_theme($existing, $type, $theme, $path) {
     ],
   ];
 }
+
+function template_preprocess_zoo_animal(&$variables) {
+  $habitat_name = \Drupal\Core\Database\Database::getConnection()->select('zoo_habitat', 'h')
+      ->fields('h', ['name'])
+      ->condition('habitat_id', $variables['animal']->habitat_id)
+      ->execute()
+      ->fetchField();
+  $variables['habitat_name'] = !empty($habitat_name) ? $habitat_name : t('Unknown');
+}
