@@ -1,0 +1,12 @@
+<?php
+
+/**
+ * Implements hook_theme().
+ */
+function zoo_theme($existing, $type, $theme, $path) {
+  return [
+    'zoo_animal' => [
+      'variables' => ['animal' => NULL],
+    ],
+  ];
+}
