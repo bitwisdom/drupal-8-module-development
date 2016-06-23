@@ -18,4 +18,5 @@ function template_preprocess_zoo_animal(&$variables) {
       ->execute()
       ->fetchField();
   $variables['habitat_name'] = !empty($habitat_name) ? $habitat_name : t('Unknown');
+  $variables['#attached']['library'][] = 'zoo/animal-view';
 }
