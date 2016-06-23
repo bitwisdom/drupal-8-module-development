@@ -7,3 +7,9 @@ animal-view:
     js/animal-view.js: {}
   dependencies:
     - core/jquery
+    
+animal-list:
+  version: 1.x
+  css:
+    theme:
+      css/animal-list.css: {}

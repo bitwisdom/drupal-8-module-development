@@ -113,6 +113,11 @@ class AnimalsListController extends ControllerBase {
       'pager' => [
         '#type' => 'pager',
       ],
+      '#attached' => [
+        'library' => [
+          'zoo/animal-list',
+        ]
+      ],
     ];
   }
   
