@@ -1,0 +1,9 @@
+animal-view:
+  version: 1.x
+  css:
+    theme:
+      css/animal-view.css: {}
+  js:
+    js/animal-view.js: {}
+  dependencies:
+    - core/jquery
