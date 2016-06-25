@@ -54,3 +54,11 @@ zoo.animal_edit:
     _title: 'Edit Animal'
   requirements:
     _permission: 'administer zoo'
+    
+zoo.animal_add:
+  path: '/animals/add'
+  defaults:
+    _form: '\Drupal\zoo\Form\AnimalEditForm'
+    _title: 'Add Animal'
+  requirements:
+    _permission: 'administer zoo'
