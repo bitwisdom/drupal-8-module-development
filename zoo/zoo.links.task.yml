@@ -9,3 +9,9 @@ zoo.animal_edit:
   route_name: zoo.animal_edit
   base_route: zoo.animal_view
   weight: 10
+  
+zoo.animal_delete:
+  title: 'Delete'
+  route_name: zoo.animal_delete
+  base_route: zoo.animal_view
+  weight: 20
