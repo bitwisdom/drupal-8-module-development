@@ -1,0 +1,5 @@
+zoo.animal_add:
+  route_name: zoo.animal_add
+  title: 'Create new animal'
+  appears_on:
+    - zoo.habitats_list

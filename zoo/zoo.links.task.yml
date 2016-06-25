@@ -1,0 +1,11 @@
+zoo.animal_view:
+  title: 'View'
+  route_name: zoo.animal_view
+  base_route: zoo.animal_view
+  weight: 0
+  
+zoo.animal_edit:
+  title: 'Edit'
+  route_name: zoo.animal_edit
+  base_route: zoo.animal_view
+  weight: 10
