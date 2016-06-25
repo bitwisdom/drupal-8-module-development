@@ -20,7 +20,12 @@ class ContactFormBlock extends BlockBase {
    */
   public function build() {
     $form = \Drupal::formBuilder()->getForm('\Drupal\form_examples\Form\ContactForm');
-    return $form;
+    return [
+      'some_text' => [
+        '#markup' => '<p>' . $this->t('Here is some HTML.') . '</p>',
+      ],
+      'form' => $form
+    ];
   }
 
 }
