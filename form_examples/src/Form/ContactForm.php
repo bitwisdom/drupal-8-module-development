@@ -55,6 +55,16 @@ class ContactForm extends FormBase {
 
   public function submitForm(array &$form, FormStateInterface $form_state) {
     drupal_set_message($this->t('Thanks for submitting the form!'));
+    
+    $keys = ['name', 'email', 'message'];
+    foreach ($keys as $key) {
+      drupal_set_message($this->t('@key: @value', 
+        [
+          '@key' => $key,
+          '@value' => $form_state->getValue($key),
+        ]
+      ));
+    }
   }
 
 }
