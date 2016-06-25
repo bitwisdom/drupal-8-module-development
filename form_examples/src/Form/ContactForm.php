@@ -2,7 +2,7 @@
 
 namespace Drupal\form_examples\Form;
 
-use Drupal\Core\Form\FormBase;
+use \Drupal\Core\Form\FormBase;
 use \Drupal\Core\Form\FormStateInterface;
 
 class ContactForm extends FormBase {
