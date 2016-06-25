@@ -62,3 +62,11 @@ zoo.animal_add:
     _title: 'Add Animal'
   requirements:
     _permission: 'administer zoo'
+    
+zoo.animal_delete:
+  path: '/animals/{animal_id}/delete'
+  defaults:
+    _form: '\Drupal\zoo\Form\AnimalDeleteForm'
+    _title: 'Delete Animal'
+  requirements:
+    _permission: 'administer zoo'
