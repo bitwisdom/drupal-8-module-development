@@ -65,6 +65,9 @@ class ContactForm extends FormBase {
         ]
       ));
     }
+    
+    $form_state->setRedirect('<front>');
+    
   }
 
 }
