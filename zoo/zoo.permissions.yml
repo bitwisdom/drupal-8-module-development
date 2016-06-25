@@ -1,0 +1,4 @@
+administer zoo:
+  title: 'Administer Zoo'
+  description: 'Administer the Zoo Management system'
+  restrict access: true
