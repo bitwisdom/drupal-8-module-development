@@ -34,8 +34,19 @@ class ContactForm extends FormBase {
     ];
     return $form;
   }
+  
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+    parent::validateForm($form, $form_state);
+    
+    $email = $form_state->getValue('email');
+    if (!preg_match('/\.edu$/', $email)) {
+      $form_state->setErrorByName('email', 
+          $this->t('Only .edu addresses are allowed.')
+      );
+    }
+  }
 
-  public function submitForm(array &$form, FormStateInterface $form_state) {
+    public function submitForm(array &$form, FormStateInterface $form_state) {
     drupal_set_message($this->t('Thanks for submitting the form!'));
   }
 
