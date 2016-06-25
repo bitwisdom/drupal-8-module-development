@@ -51,7 +51,7 @@ class AnimalDeleteForm extends ConfirmFormBase {
         ->condition('animal_id', $this->animalId)
         ->execute();
     drupal_set_message($this->t('Animal deleted.'));
-    $form_state->setRedirect('zoo.animals_list');
+    $form_state->setRedirect('zoo.habitats_list');
   }
 
   
