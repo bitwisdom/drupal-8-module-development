@@ -5,3 +5,11 @@ form_examples.contact_form:
     _title: 'Contact Us'
   requirements:
     _permission: 'access content'
+    
+form_examples.kitchen_sink:
+  path: '/kitchen-sink'
+  defaults:
+    _form: '\Drupal\form_examples\Form\KitchenSinkForm'
+    _title: 'The Kitchen Sink Form'
+  requirements:
+    _permission: 'access content'
