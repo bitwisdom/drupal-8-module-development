@@ -29,3 +29,11 @@ function form_examples_check_pin($form, FormStateInterface $form_state) {
 function form_examples_log_logins($form, FormStateInterface $form_state) {
   drupal_set_message(t('Your login as been logged for reference.'));
 }
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function form_examples_form_node_article_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
+  $form['promote']['#access'] = FALSE;
+  $form['sticky']['#access'] = FALSE;
+}
