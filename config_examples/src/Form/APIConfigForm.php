@@ -29,21 +29,27 @@ class APIConfigForm extends FormBase {
   }
   
   public function buildForm(array $form, FormStateInterface $form_state) {
+    
+    $api_config = $this->configFactory->get('config_examples.api');
+    
     $form['url'] = [
       '#type' => 'url',
       '#title' => $this->t('API Endpoint URL'),
       '#required' => TRUE,
+      '#default_value' => $api_config->get('url'),
     ];
     $form['key'] = [
       '#type' => 'textfield',
       '#title' => $this->t('API Key'),
       '#required' => TRUE,
+      '#default_value' => $api_config->get('key'),
     ];
     $form['username'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Usernames to Retrieve Data For'),
       '#description' => $this->t('Enter the usernames separated by commas.'),
       '#required' => TRUE,
+      '#default_value' => implode(', ', $api_config->get('username')),
     ];
     $form['automatic'] = [
       '#type' => 'fieldset',
@@ -52,6 +58,7 @@ class APIConfigForm extends FormBase {
     $form['automatic']['enabled'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Enabled'),
+      '#default_value' => $api_config->get('automatic_enabled'),
     ];
     $form['automatic']['frequency'] = [
       '#type' => 'select',
@@ -71,7 +78,8 @@ class APIConfigForm extends FormBase {
         'required' => [
           ':input[name="enabled"]' => ['checked' => TRUE],
         ],
-      ]
+      ],
+      '#default_value' => $api_config->get('automatic_frequency'),
     ];
     $form['submit'] = [
       '#type' => 'submit',
@@ -83,6 +91,7 @@ class APIConfigForm extends FormBase {
   
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $username = array_map('trim', explode(',', $form_state->getValue('username')));
+    
     $api_config = $this->configFactory->getEditable('config_examples.api');
     
     $api_config->set('url', $form_state->getValue('url'))
