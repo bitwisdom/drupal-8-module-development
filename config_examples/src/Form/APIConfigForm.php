@@ -7,22 +7,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 
 class APIConfigForm extends FormBase {
-  
-  /**
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  protected $configFactory;
-  
-  public function __construct(ConfigFactoryInterface $configFactory) {
-    $this->configFactory = $configFactory;
-  }
-  
-  public static function create(\Symfony\Component\DependencyInjection\ContainerInterface $container) {
-    return new static(
-      $container->get('config.factory')
-    );
-  }
-
     
   public function getFormId() {
     return 'config_examples_api_config_form';
@@ -30,7 +14,7 @@ class APIConfigForm extends FormBase {
   
   public function buildForm(array $form, FormStateInterface $form_state) {
     
-    $api_config = $this->configFactory->get('config_examples.api');
+    $api_config = $this->configFactory()->get('config_examples.api');
     
     $form['url'] = [
       '#type' => 'url',
@@ -92,7 +76,7 @@ class APIConfigForm extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $username = array_map('trim', explode(',', $form_state->getValue('username')));
     
-    $api_config = $this->configFactory->getEditable('config_examples.api');
+    $api_config = $this->configFactory()->getEditable('config_examples.api');
     
     $api_config->set('url', $form_state->getValue('url'))
         ->set('key', $form_state->getValue('key'))
