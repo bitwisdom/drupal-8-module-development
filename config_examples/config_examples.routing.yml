@@ -1,0 +1,9 @@
+config_examples.api_config:
+  path: '/admin/config/services/example-api'
+  defaults:
+    _form: '\Drupal\config_examples\Form\APIConfigForm'
+    _title: 'Example API Configuration'
+  requirements:
+    _permission: 'access administration pages'
+  options:
+    _admin_route: TRUE

@@ -1,0 +1,6 @@
+name: Configuration Examples
+type: module
+description: 'Configuration examples for Drupal 8.'
+package: Training
+version: '8.x-1.0'
+core: '8.x'
