@@ -2,19 +2,26 @@
 
 namespace Drupal\config_examples\Form;
 
-use Drupal\Core\Form\FormBase;
+use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 
-class APIConfigForm extends FormBase {
+class APIConfigForm extends ConfigFormBase {
+  
+  protected function getEditableConfigNames() {
+    return [
+      'config_examples.api',
+    ];
+  }
     
   public function getFormId() {
     return 'config_examples_api_config_form';
   }
   
   public function buildForm(array $form, FormStateInterface $form_state) {
+    $form = parent::buildForm($form, $form_state);
     
-    $api_config = $this->configFactory()->get('config_examples.api');
+    $api_config = $this->config('config_examples.api');
     
     $form['url'] = [
       '#type' => 'url',
@@ -65,18 +72,16 @@ class APIConfigForm extends FormBase {
       ],
       '#default_value' => $api_config->get('automatic_frequency'),
     ];
-    $form['submit'] = [
-      '#type' => 'submit',
-      '#value' => $this->t('Save Configuration'),
-    ];
+    
     return $form;
   }
 
   
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    parent::submitForm($form, $form_state);
     $username = array_map('trim', explode(',', $form_state->getValue('username')));
     
-    $api_config = $this->configFactory()->getEditable('config_examples.api');
+    $api_config = $this->config('config_examples.api');
     
     $api_config->set('url', $form_state->getValue('url'))
         ->set('key', $form_state->getValue('key'))
@@ -84,7 +89,6 @@ class APIConfigForm extends FormBase {
         ->set('automatic_enabled', $form_state->getValue('enabled'))
         ->set('automatic_frequency', $form_state->getValue('frequency'))
         ->save();
-    drupal_set_message($this->t('Configuration saved.'));
   }
 
 }
