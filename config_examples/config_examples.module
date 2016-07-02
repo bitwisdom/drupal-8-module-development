@@ -6,11 +6,23 @@
 function config_examples_cron() {
   $api_config = \Drupal::config('config_examples.api');
   if ($api_config->get('automatic_enabled')) {
-    drupal_set_message(t('Calling @url for the API results.',
+    $state = \Drupal::state();
+    $state = \Drupal::service('state'); 
+    // Implements \Drupal\Core\State\StateInterface
+    
+    $last_run = $state->get('config_examples.last_api_import');
+    if (empty($last_run) || 
+        $last_run <= (REQUEST_TIME - $api_config->get('automatic_frequency'))) {
+      
+      // It's time to run the API pull.
+      drupal_set_message(t('Calling @url for the API results.',
         [
           '@url' => $api_config->get('url'),
         ]
-      )
-    );
+        )
+      );
+      
+      $state->set('config_examples.last_api_import', REQUEST_TIME);
+    } 
   }
 }
