@@ -1,0 +1,5 @@
+url: 'http://api.example.com'
+key: ''
+username: { }
+automatic_enabled: false
+automatic_frequency: 3600
