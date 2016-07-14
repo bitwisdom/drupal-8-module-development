@@ -25,7 +25,9 @@ class HelloWorldBlock extends BlockBase {
             '@time' => \Drupal::service('date.formatter')->format(REQUEST_TIME, 'custom', 'H:i:s')
           ]
         ),
-
+      '#cache' => [
+        'max-age' => 0,
+      ],
     ];
   }
 
