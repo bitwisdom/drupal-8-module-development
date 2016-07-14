@@ -47,6 +47,7 @@ class EntityQueryController extends ControllerBase {
       $this->t('Type'),
       $this->t('Title'),
       $this->t('Author'),
+      $this->t('Post Date'),
     ];
     $rows = [];
     $authors = [];
@@ -56,6 +57,7 @@ class EntityQueryController extends ControllerBase {
         $node->bundle(),
         $node->getTitle(),
         $node->getOwner()->getDisplayName(),
+        \Drupal::service('date.formatter')->format($node->getCreatedTime(), 'long'),
       ];
       $authors[$node->getOwner()->id()] = $node->getOwner()->id();
     }
@@ -70,6 +72,7 @@ class EntityQueryController extends ControllerBase {
       '#header' => $header,
       '#rows' => $rows,
       '#cache' => [
+        'contexts' => ['timezone'],
         'tags' => $cache_tags,
       ]
     ];
