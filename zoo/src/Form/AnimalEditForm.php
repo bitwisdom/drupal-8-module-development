@@ -160,7 +160,7 @@ class AnimalEditForm extends FormBase {
         ['animal_id' => $animal_id]
     );
     
-    $this->cacheTagInvalidator->invalidateTags(['animal.' . $animal_id]);
+    $this->cacheTagInvalidator->invalidateTags(['animal.' . $animal_id, 'animal.list']);
   }
 
 }
