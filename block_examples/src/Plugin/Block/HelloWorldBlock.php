@@ -26,7 +26,7 @@ class HelloWorldBlock extends BlockBase {
           ]
         ),
       '#cache' => [
-        'max-age' => 0,
+        'max-age' => 20,
       ],
     ];
   }

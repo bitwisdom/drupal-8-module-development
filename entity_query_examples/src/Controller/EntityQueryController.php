@@ -62,6 +62,9 @@ class EntityQueryController extends ControllerBase {
       '#theme' => 'table',
       '#header' => $header,
       '#rows' => $rows,
+      '#cache' => [
+        'tags' => ['node_list']
+      ]
     ];
   }
   
