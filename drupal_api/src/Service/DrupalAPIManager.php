@@ -3,6 +3,7 @@
 namespace Drupal\drupal_api\Service;
 
 use GuzzleHttp\Client;
+use Drupal\Core\Database\Connection;
 
 /**
  * Description of DrupalAPIManager
@@ -17,73 +18,80 @@ class DrupalAPIManager implements DrupalAPIManagerInterface {
    */
   protected $client;
   
-  public function __construct(Client $client) {
+  /**
+   * @var \Drupal\Core\Database\Connection
+   */
+  protected $connection;
+  
+  public function __construct(Client $client, Connection $connection) {
     $this->client = $client;
+    $this->connection = $connection;
   }
 
   /**
    * @return array
    */
   public function getLatestModules() {
-    $modules = [];
-    $data = NULL;
-    try {
-      $response = $this->client->get('https://www.drupal.org/api-d7/node.json?type=project_module&limit=10&sort=created&direction=DESC&field_project_type=full');
-      if ($response->getStatusCode() == 200) {
-        $json = $response->getBody()->getContents();
-        $data = json_decode($json);
-      }
-      else {
-        drupal_set_message(t('Error retrieving module information.'), 'error');
-      }
-    } catch (\Exception $ex) {
-      drupal_set_message(t('Error retrieving module information.'), 'error');
-    }
-    if (!empty($data)) {
-      foreach ($data->list as $module_data) {
-        $modules[] = [
-          'name' => $module_data->title,
-          'created' => $module_data->created,
-          'url' => $module_data->url,
-          'description' => !empty($module_data->body->value) ? $module_data->body->value : '',
-        ];
-     }
-    }
-    
-    return $modules;
+    return $this->getLatestProjects('project_module');
   }
   
   /**
    * @return array
    */
   public function getLatestThemes() {
-    $modules = [];
-   
+    return $this->getLatestProjects('project_theme');
+  }
+  
+  protected function getLatestProjects($type = NULL) {
+    $query = $this->connection->select('drupal_api', 'd')
+        ->fields('d')
+        ->orderBy('created', 'DESC')
+        ->range(0, 10);
+    if (!empty($type)) {
+      $query->condition('type', $type);
+    }
+    return $query->execute()
+        ->fetchAll(\PDO::FETCH_ASSOC);
+  }
+  
+  /**
+   * Fetch the latest projects fro Drupal.org API
+   */
+  public function fetchLatestProjects() {
     $data = NULL;
     try {
-      $response = $this->client->get('https://www.drupal.org/api-d7/node.json?type=project_theme&limit=10&sort=created&direction=DESC&field_project_type=full');
+      $response = $this->client->get('https://www.drupal.org/api-d7/node.json?type[]=project_theme&type[]=project_module&limit=100&sort=created&direction=DESC&field_project_type=full');
       if ($response->getStatusCode() == 200) {
         $json = $response->getBody()->getContents();
         $data = json_decode($json);
       }
-      else {
-        drupal_set_message(t('Error retrieving theme information.'), 'error');
-      }
     } catch (\Exception $ex) {
-      drupal_set_message(t('Error retrieving theme information.'), 'error');
+      watchdog_exception('drupal_api', $ex);
     }
     if (!empty($data)) {
-      foreach ($data->list as $theme_data) {
-        $modules[] = [
-          'name' => $theme_data->title,
-          'created' => $theme_data->created,
-          'url' => $theme_data->url,
-          'description' => !empty($theme_data->body->value) ? $theme_data->body->value : '',
-        ];
-     }
+      foreach ($data->list as $project_data) {
+        // Check if we already have the NID in the DB.
+        $project = $this->connection->select('drupal_api', 'd')
+            ->fields('d')
+            ->condition('d.id', $project_data->nid)
+            ->execute()
+            ->fetch();
+        
+        if (empty($project)) {
+          // Only import new projects
+          $this->connection->insert('drupal_api')
+              ->fields([
+                'id' => $project_data->nid,
+                'name' => $project_data->title,
+                'type' => $project_data->type,
+                'created' => $project_data->created,
+                'url' => $project_data->url,
+                'description' => !empty($project_data->body->value) ? $project_data->body->value : ''
+              ])
+              ->execute();
+        }
+      }
     }
-    
-    return $modules;
   }
   
   /**

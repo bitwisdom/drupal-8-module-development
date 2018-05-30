@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * Implements hook_cron().
+ */
+function drupal_api_cron() {
+  \Drupal::service('drupal_api.manager')->fetchLatestProjects();
+}
+
+/**
+ * Implements hook_theme().
+ */
+function drupal_api_theme($existing, $type, $theme, $path) {
+  return [
+    'drupal_api_project' => [
+      'variables' => ['name' => NULL, 'created' => NULL, 'description' => NULL, 'url' => NULL]
+    ],
+  ];
+}

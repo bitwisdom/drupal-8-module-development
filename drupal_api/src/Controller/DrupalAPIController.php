@@ -16,11 +16,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class DrupalAPIController extends ControllerBase {
   
   /**
-   * @var \Drupal\Core\Datetime\DateFormatterInterface
-   */
-  protected $dateFormatter;
-  
-  /**
    *
    * @var \Drupal\drupal_api\Service\DrupalAPIManagerInterface
    */
@@ -28,54 +23,49 @@ class DrupalAPIController extends ControllerBase {
  
   
   /**
-   * @param \Drupal\Core\Datetime\DateFormatterInterface $dateFormatter
    * @param \Drupal\drupal_api\Service\DrupalAPIManagerInterface $apiManager
    */
-  function __construct(DateFormatterInterface $dateFormatter, DrupalAPIManagerInterface $apiManager) {
-    $this->dateFormatter = $dateFormatter;
+  function __construct(DrupalAPIManagerInterface $apiManager) {
     $this->apiManager = $apiManager;
   }
   
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('date.formatter'),
       $container->get('drupal_api.manager')
     );
   }
   
   
   public function latestModules() {
-    $modules = $this->apiManager->getLatestModules();
+    $build = [];
     
-    $output = '';
-    
-    foreach ($modules as $module) {
-      $output .= '<div class="module">';
-      $output .= '<h2><a href="' . $module['url'] . '">' . $module['name'] . '</a></h2>';
-      $output .= '<div class="created">' . $this->dateFormatter->format($module['created'], 'custom', 'Y-m-d H:i:s') . '</div>';
-      $output .= '<div class="description">' . $module['description'] . '</div>';
+    foreach ($this->apiManager->getLatestModules() as $project) {
+      $build[] = [
+        '#theme' => 'drupal_api_project',
+        '#name' => $project['name'],
+        '#url' => $project['url'],
+        '#created' => $project['created'],
+        '#description' => $project['description'],
+      ];
     }
     
-    return [
-      '#markup' => $output,
-    ];
+    return $build;
    }
    
    public function latestThemes() {
-    $modules = $this->apiManager->getLatestThemes();
+    $build = [];
     
-    $output = '';
-    
-    foreach ($modules as $module) {
-      $output .= '<div class="module">';
-      $output .= '<h2><a href="' . $module['url'] . '">' . $module['name'] . '</a></h2>';
-      $output .= '<div class="created">' . $this->dateFormatter->format($module['created'], 'custom', 'Y-m-d H:i:s') . '</div>';
-      $output .= '<div class="description">' . $module['description'] . '</div>';
+    foreach ($this->apiManager->getLatestThemes() as $project) {
+      $build[] = [
+        '#theme' => 'drupal_api_project',
+        '#name' => $project['name'],
+        '#url' => $project['url'],
+        '#created' => $project['created'],
+        '#description' => $project['description'],
+      ];
     }
     
-    return [
-      '#markup' => $output,
-    ];
+    return $build;
    }
    
   /* Version 1
