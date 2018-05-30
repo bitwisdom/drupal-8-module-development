@@ -1,0 +1,4 @@
+services:
+  drupal_api.manager:
+    class: 'Drupal\drupal_api\Service\DrupalAPIManager'
+    arguments: ['@http_client']

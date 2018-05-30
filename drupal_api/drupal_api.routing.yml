@@ -1,0 +1,15 @@
+drupal_api.modules:
+  path: '/drupal/modules'
+  defaults:
+    _controller: '\Drupal\drupal_api\Controller\DrupalAPIController::latestModules'
+    _title: 'Latest Drupal Modules'
+  requirements:
+    _permission: 'access content'
+
+drupal_api.themes:
+  path: '/drupal/themes'
+  defaults:
+    _controller: '\Drupal\drupal_api\Controller\DrupalAPIController::latestThemes'
+    _title: 'Latest Drupal Themes'
+  requirements:
+    _permission: 'access content'

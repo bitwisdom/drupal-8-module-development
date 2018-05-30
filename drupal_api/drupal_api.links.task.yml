@@ -1,0 +1,11 @@
+drupal_api.modules:
+  title: 'Modules'
+  route_name: drupal_api.modules
+  base_route: drupal_api.modules
+  weight: -10
+  
+drupal_api.themes:
+  title: 'Themes'
+  route_name: drupal_api.themes
+  base_route: drupal_api.modules
+
