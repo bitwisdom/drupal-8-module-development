@@ -4,6 +4,7 @@ namespace Drupal\drupal_api\Service;
 
 use GuzzleHttp\Client;
 use Drupal\Core\Database\Connection;
+use \Drupal\Core\Cache\CacheTagsInvalidatorInterface;
 
 /**
  * Description of DrupalAPIManager
@@ -23,9 +24,16 @@ class DrupalAPIManager implements DrupalAPIManagerInterface {
    */
   protected $connection;
   
-  public function __construct(Client $client, Connection $connection) {
+    /**
+   *
+   * @var \Drupal\Core\Cache\CacheTagsInvalidatorInterface
+   */
+  private $cacheTagInvalidator;
+  
+  public function __construct(Client $client, Connection $connection, CacheTagsInvalidatorInterface $cacheTagInvalidator) {
     $this->client = $client;
     $this->connection = $connection;
+    $this->cacheTagInvalidator = $cacheTagInvalidator;
   }
 
   /**
@@ -92,6 +100,7 @@ class DrupalAPIManager implements DrupalAPIManagerInterface {
         }
       }
     }
+    $this->cacheTagInvalidator->invalidateTags(['drupal_api.project.list']);
   }
   
   /**

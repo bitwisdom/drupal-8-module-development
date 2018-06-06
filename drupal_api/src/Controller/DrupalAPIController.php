@@ -6,6 +6,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\drupal_api\Service\DrupalAPIManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Cache\CacheableMetadata;
 
 
 /**
@@ -20,6 +21,7 @@ class DrupalAPIController extends ControllerBase {
    * @var \Drupal\drupal_api\Service\DrupalAPIManagerInterface
    */
   protected $apiManager;
+ 
  
   
   /**
@@ -49,6 +51,15 @@ class DrupalAPIController extends ControllerBase {
       ];
     }
     
+    //$build['#cache'] = [
+    //  'tags' => ['drupal_api.project.list'],
+    //];
+    
+    $cache_metadata = new CacheableMetadata();
+    $cache_metadata->addCacheTags(['drupal_api.project.list']);
+    $cache_metadata->addCacheContexts(['timezone']);
+    $cache_metadata->applyTo($build);
+    
     return $build;
    }
    
@@ -64,6 +75,15 @@ class DrupalAPIController extends ControllerBase {
         '#description' => $project['description'],
       ];
     }
+    
+    //$build['#cache'] = [
+    //  'tags' => ['drupal_api.project.list'],
+    //];
+    
+    $cache_metadata = new CacheableMetadata();
+    $cache_metadata->addCacheTags(['drupal_api.project.list']);
+    $cache_metadata->addCacheContexts(['timezone']);
+    $cache_metadata->applyTo($build);
     
     return $build;
    }

@@ -13,3 +13,13 @@ drupal_api.themes:
     _title: 'Latest Drupal Themes'
   requirements:
     _permission: 'access content'
+    
+drupal_api.settings:
+  path: '/admin/config/services/drupal-api'
+  defaults:
+    _form: '\Drupal\drupal_api\Form\DrupalAPIConfigForm'
+    _title: 'Drupal API Configuration'
+  requirements:
+    _permission: 'access administration pages'
+  options:
+    _admin_route: TRUE

@@ -4,7 +4,16 @@
  * Implements hook_cron().
  */
 function drupal_api_cron() {
-  \Drupal::service('drupal_api.manager')->fetchLatestProjects();
+  $api_config = \Drupal::config('drupal_api.settings');
+  if ($api_config->get('import_enabled')) {
+    $state = \Drupal::state();
+    $last_run = $state->get('drupal_api.last_import');
+    if (empty($last_run) || $last_run <= (REQUEST_TIME - $api_config->get('import_frequency'))) {
+      \Drupal::service('drupal_api.manager')->fetchLatestProjects();
+      $state->set('drupal_api.last_import', REQUEST_TIME);
+    } 
+  }
+  
 }
 
 /**

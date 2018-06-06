@@ -1,0 +1,10 @@
+drupal_api.settings:
+  type: config_object
+  label: 'Config Examples API settings'
+  mapping:
+    import_enabled:
+      type: boolean
+      label: 'Enable Automatic Import of New Data'
+    import_frequency:
+      type: integer
+      label: 'Automatic Import Frequency'
