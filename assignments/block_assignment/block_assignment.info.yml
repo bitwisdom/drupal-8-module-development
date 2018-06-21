@@ -1,0 +1,8 @@
+name: Block Assignment
+type: module
+description: 'Block assignments for Drupal 8 Module Development class.'
+package: Training
+version: '8.x-1.0'
+core: '8.x'
+dependencies:
+  - block
