@@ -3,6 +3,7 @@
 namespace Drupal\block_examples\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Cache\CacheableMetadata;
 
 /**
  * Provides a 'Hello World' block.
@@ -14,21 +15,20 @@ use Drupal\Core\Block\BlockBase;
  * )
  */
 class HelloWorldBlock extends BlockBase {
-
   /**
    * {@inheritdoc}
    */
   public function build() {
-    return [
+    $cache = new CacheableMetadata();
+    $cache->setCacheMaxAge(5);
+    $build = [
       '#markup' => $this->t('Hello world! The current time is @time', 
           [
             '@time' => \Drupal::service('date.formatter')->format(REQUEST_TIME, 'custom', 'H:i:s')
           ]
         ),
-      '#cache' => [
-        'max-age' => 20,
-      ],
     ];
+    $cache->applyTo($build);
+    return $build;
   }
-
 }
