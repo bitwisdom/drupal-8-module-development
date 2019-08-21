@@ -44,7 +44,7 @@ class ContactFormBlock extends BlockBase implements ContainerFactoryPluginInterf
    * {@inheritdoc}
    */
   public function build() {
-    $form = \Drupal::formBuilder()->getForm('\Drupal\form_examples\Form\ContactForm');
+    $form = $this->formBuilder->getForm('\Drupal\form_examples\Form\ContactForm');
     return [
       'some_text' => [
         '#markup' => '<p>' . $this->t('Here is some HTML.') . '</p>',
