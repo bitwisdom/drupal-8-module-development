@@ -20,9 +20,9 @@ class HelloWorldBlock extends BlockBase {
    */
   public function build() {
     return [
-      '#markup' => $this->t('Hello world! The current time is @time', 
+      '#markup' => $this->t('Hello world! The current time is @time',
           [
-            '@time' => \Drupal::service('date.formatter')->format(REQUEST_TIME, 'custom', 'H:i:s')
+            '@time' => \Drupal::service('date.formatter')->format(\Drupal::time()->getRequestTime(), 'custom', 'H:i:s')
           ]
         ),
       '#cache' => [

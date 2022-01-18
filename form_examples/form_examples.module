@@ -27,7 +27,7 @@ function form_examples_check_pin($form, FormStateInterface $form_state) {
 }
 
 function form_examples_log_logins($form, FormStateInterface $form_state) {
-  drupal_set_message(t('Your login as been logged for reference.'));
+  \Drupal::messenger()->addMessage(t('Your login as been logged for reference.'));
 }
 
 /**

@@ -12,17 +12,17 @@ function config_examples_cron() {
     
     $last_run = $state->get('config_examples.last_api_import');
     if (empty($last_run) || 
-        $last_run <= (REQUEST_TIME - $api_config->get('automatic_frequency'))) {
+        $last_run <= (\Drupal::time()->getRequestTime() - $api_config->get('automatic_frequency'))) {
       
       // It's time to run the API pull.
-      drupal_set_message(t('Calling @url for the API results.',
+      \Drupal::messenger()->addMessage(t('Calling @url for the API results.',
         [
           '@url' => $api_config->get('url'),
         ]
         )
       );
       
-      $state->set('config_examples.last_api_import', REQUEST_TIME);
+      $state->set('config_examples.last_api_import', \Drupal::time()->getRequestTime());
     } 
   }
 }

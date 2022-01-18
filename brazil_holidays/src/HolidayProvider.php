@@ -23,7 +23,7 @@ class HolidayProvider implements HolidayProviderInterface {
       '09-07' => "Independence Day",
       '12-25' => "Christmas",
     ];
-    $current_year = $this->dateFormatter->format(REQUEST_TIME, 'custom', 'Y');
+    $current_year = $this->dateFormatter->format(\Drupal::time()->getRequestTime(), 'custom', 'Y');
     
     foreach ($holiday_patterns as $date => $holiday) {
       $current_holiday_date = $current_year . '-' . $date;

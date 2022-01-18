@@ -39,7 +39,7 @@ class AnimalsListController extends ControllerBase {
       ORDER BY h.name");
     
     foreach ($results as $record) {
-      $age = floor((REQUEST_TIME - $record->birthdate) / (365 * 24 * 3600));
+      $age = floor((\Drupal::time()->getRequestTime() - $record->birthdate) / (365 * 24 * 3600));
       $rows[] = [
         $record->name,
         $record->type,
@@ -82,7 +82,7 @@ class AnimalsListController extends ControllerBase {
     }
     $results = $query->execute();
     foreach ($results as $record) {
-      $age = floor((REQUEST_TIME - $record->birthdate) / (365 * 24 * 3600));
+      $age = floor((\Drupal::time()->getRequestTime() - $record->birthdate) / (365 * 24 * 3600));
       $row = [
         \Drupal\Core\Link::fromTextAndUrl(
             $record->name, 
@@ -155,7 +155,7 @@ class AnimalsListController extends ControllerBase {
           'habitat_id' => $habitat,
         ]);
     foreach ($results as $record) {
-      $age = floor((REQUEST_TIME - $record->birthdate) / (365 * 24 * 3600));
+      $age = floor((\Drupal::time()->getRequestTime() - $record->birthdate) / (365 * 24 * 3600));
       $rows[] = [
         $record->name,
         $record->type,

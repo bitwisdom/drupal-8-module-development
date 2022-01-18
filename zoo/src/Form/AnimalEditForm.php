@@ -154,7 +154,7 @@ class AnimalEditForm extends FormBase {
           ->execute();
     }
     
-    drupal_set_message($this->t('Animal saved.'));
+    \Drupal::messenger()->addMessage($this->t('Animal saved.'));
     
     $form_state->setRedirect('zoo.animal_view', 
         ['animal_id' => $animal_id]
